@@ -139,6 +139,10 @@ def bulkReq(bulkFile):
 
     response = requests.post(URL + '/admin/v1/Bulk', headers=headers, data=data, verify=False)
 
-    response.json()
+    if response.status_code == 201:
+        print('bulk.json has been successfully imported.')
+    else:
+        print('An error has occured\n')
+        print(response.json())
 
 __init__()
