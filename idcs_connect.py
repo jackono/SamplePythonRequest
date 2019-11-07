@@ -13,7 +13,7 @@ def __init__():
     # pass client id and secret as parameter to get auth token
     auth_token = getAuth(conf['ClientId'], conf['ClientSecret'])
 
-
+    # Test Data
     userName = 'jaspiom@example.com'
     createFile = 'file1.json'
     updateFile = 'update1.json'
