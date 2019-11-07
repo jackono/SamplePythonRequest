@@ -1,8 +1,8 @@
 {
-  "ClientId" : "dc7a4480017044ddbdf6d65e722db281",
-  "ClientSecret" : "5a456ebc-5af2-439a-a203-a4b5809a7235",
-  "BaseUrl" : "https://idcs-cf4d71df63764031b6f0ffab3538f447.identity.oraclecloud.com",
-  "AudienceServiceUrl" : "https://idcs-cf4d71df63764031b6f0ffab3538f447.identity.oraclecloud.com",
+  "ClientId" : "<Client ID>",
+  "ClientSecret" : "<Client Secret>",
+  "BaseUrl" : "<IDCS URL>",
+  "AudienceServiceUrl" : "<IDCS URL>",
   "scope" : "urn:opc:idm:t.user.me openid",
   "TokenIssuer" : "https://identity.oraclecloud.com/",
   "redirectURL": "http://localhost:8000/callback",
