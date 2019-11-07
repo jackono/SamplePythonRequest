@@ -20,9 +20,9 @@ def __init__():
     
     # Comment out the function you want to test
 
-    # createUser(createFile)
-    # print getUserId(userName)
-    updateUser(userName, updateFile)
+    createUser(createFile)
+    # print(getUserId(userName))
+    # updateUser(userName, updateFile)
     # deleteUser(userName)
 
 def getAuth(clientId, clientSecret): 
@@ -60,10 +60,10 @@ def createUser(createFile):
 
     # Error handling
     if response.status_code == 201:
-        print response.json()['userName'] + ' has been created'
+        print(response.json()['userName'] + ' has been created')
     else:
-        print 'An error has occured\n'
-        print response.json()
+        print('An error has occured\n')
+        print(response.json())
 
 
 def getUserId(userName):
@@ -77,12 +77,12 @@ def getUserId(userName):
     # Error handling
     if response.status_code == 200:
         for userId in res['Resources']:
-            # print userId['userName'] //Comment out to print all users
+            # print(userId['userName']) //Comment out to print()all users
             if userId['userName'] == userName:
-                print 'ID for ' + userName + ' retrieved ' + userId['id']
+                print('ID for ' + userName + ' retrieved ' + userId['id'])
                 return userId['id']
     else:
-        print response.json()
+        print(response.json())
 
 def updateUser(userName, updateFile):
 
@@ -103,10 +103,10 @@ def updateUser(userName, updateFile):
     
     # Error handling
     if response.status_code == 200:
-        print userName + ' has been updated'
+        print(userName + ' has been updated')
     else:
-        print 'An error has occured\n'
-        print response.json()
+        print('An error has occured\n')
+        print(response.json())
 
 def deleteUser(userName):
     headers = {
@@ -118,9 +118,9 @@ def deleteUser(userName):
 
     # Error handling
     if response.status_code == 204:
-        print userName + ' has been deleted'
+        print(userName + ' has been deleted')
     else:
-        print 'An error has occured\n'
-        print response.json()
+        print('An error has occured\n')
+        print(response.json())
 
 __init__()
