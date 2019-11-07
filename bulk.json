@@ -12,7 +12,7 @@
                         "verified": false,
                         "type": "recovery",
                         "primary": false,
-                        "value": "jolo@example.com"
+                        "value": "jolo@gmail.com"
                     }
 
                     ,
@@ -20,7 +20,7 @@
                         "verified": false,
                         "type": "home",
                         "primary": true,
-                        "value": "jolo@example.com"
+                        "value": "jolo@gmail.com"
                     }
 
                 ],
@@ -138,6 +138,22 @@
                             "familyName": "Gold",
                             "formatted": "dr Alice W Gold suff"
                         }
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/Groups",
+            "bulkId": "ytrewq",
+            "data": {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+                "displayName": "Tour Guides",
+                "members": [
+                    {
+                        "type": "User",
+                        "value": "bulkId:qwerty"
+                    }
+
+                ]
             }
         }
     ]
