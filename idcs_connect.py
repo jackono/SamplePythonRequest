@@ -65,7 +65,7 @@ def createUser(createFile):
         print(response.json()['userName'] + ' has been created')
     else:
         print('An error has occured\n')
-        print(response.json())
+        print(json.dumps(response.json(), indent=2))
 
 
 def getUserId(userName):
@@ -86,7 +86,7 @@ def getUserId(userName):
                 print('ID for ' + userName + ' retrieved ' + userId['id'])
                 return userId['id']
     else:
-        print(response.json())
+        print(json.dumps(response.json(), indent=2))
 
 def updateUser(userName, updateFile):
 
@@ -110,7 +110,7 @@ def updateUser(userName, updateFile):
         print(userName + ' has been updated')
     else:
         print('An error has occured\n')
-        print(response.json())
+        print(json.dumps(response.json(), indent=2))
 
 def deleteUser(userName):
     headers = {
@@ -125,7 +125,7 @@ def deleteUser(userName):
         print(userName + ' has been deleted')
     else:
         print('An error has occured\n')
-        print(response.json())
+        print(json.dumps(response.json(), indent=2))
 
 def bulkReq(bulkFile):
     headers = {
