@@ -14,16 +14,18 @@ def __init__():
     auth_token = getAuth(conf['ClientId'], conf['ClientSecret'])
 
     # Test Data
-    userName = 'jaspiom@example.com'
+    userName = 'Alice'
     createFile = 'file1.json'
     updateFile = 'update1.json'
+    bulkFile = 'bulk.json'
     
     # Comment out the function you want to test
 
-    createUser(createFile)
+    # createUser(createFile)
     # print(getUserId(userName))
     # updateUser(userName, updateFile)
     # deleteUser(userName)
+    bulkReq(bulkFile)
 
 def getAuth(clientId, clientSecret): 
 
@@ -74,10 +76,12 @@ def getUserId(userName):
 
     res = response.json()
     
+    print(res)
+    print(response.status_code)
     # Error handling
     if response.status_code == 200:
         for userId in res['Resources']:
-            # print(userId['userName']) //Comment out to print()all users
+            print(userId['userName']) #//Comment out to print()all users
             if userId['userName'] == userName:
                 print('ID for ' + userName + ' retrieved ' + userId['id'])
                 return userId['id']
@@ -122,5 +126,19 @@ def deleteUser(userName):
     else:
         print('An error has occured\n')
         print(response.json())
+
+def bulkReq(bulkFile):
+    headers = {
+    'Content-Type': 'application/scim+json',
+    'Authorization': 'Bearer '+ auth_token,
+    }
+
+    contents = open(bulkFile, "r")
+    dataString = json.dumps(contents.read())
+    data = json.loads(dataString)
+
+    response = requests.post(URL + '/admin/v1/Bulk', headers=headers, data=data, verify=False)
+
+    response.json()
 
 __init__()

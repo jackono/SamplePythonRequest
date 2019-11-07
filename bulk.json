@@ -1,0 +1,144 @@
+{
+    "schemas": ["urn:ietf:params:scim:api:messages:2.0:BulkRequest"],
+    "Operations": [{
+            "method": "POST",
+            "path": "/Users",
+            "bulkId": "qwerty",
+            "data": {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": "Jolo",
+                "emails": [
+                    {
+                        "verified": false,
+                        "type": "recovery",
+                        "primary": false,
+                        "value": "jolo@example.com"
+                    }
+
+                    ,
+                    {
+                        "verified": false,
+                        "type": "home",
+                        "primary": true,
+                        "value": "jolo@example.com"
+                    }
+
+                ],
+                "name":
+                        {
+                            "honorificPrefix": "dr",
+                            "honorificSuffix": "suff",
+                            "givenName": "Jolo",
+                            "middleName": "W",
+                            "familyName": "Gold",
+                            "formatted": "dr Alice W Gold suff"
+                        }
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/Users",
+            "bulkId": "1234",
+            "data": {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": "Jake",
+                "emails": [
+                    {
+                        "verified": false,
+                        "type": "recovery",
+                        "primary": false,
+                        "value": "Jake@example.com"
+                    }
+
+                    ,
+                    {
+                        "verified": false,
+                        "type": "home",
+                        "primary": true,
+                        "value": "Jake@example.com"
+                    }
+
+                ],
+                "name":
+                        {
+                            "honorificPrefix": "dr",
+                            "honorificSuffix": "suff",
+                            "givenName": "Jake",
+                            "middleName": "W",
+                            "familyName": "Gold",
+                            "formatted": "dr Alice W Gold suff"
+                        }
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/Users",
+            "bulkId": "5132",
+            "data": {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": "Jack",
+                "emails": [
+                    {
+                        "verified": false,
+                        "type": "recovery",
+                        "primary": false,
+                        "value": "Jack@example.com"
+                    }
+
+                    ,
+                    {
+                        "verified": false,
+                        "type": "home",
+                        "primary": true,
+                        "value": "alice@example.com"
+                    }
+
+                ],
+                "name":
+                        {
+                            "honorificPrefix": "dr",
+                            "honorificSuffix": "suff",
+                            "givenName": "Jack",
+                            "middleName": "W",
+                            "familyName": "Gold",
+                            "formatted": "dr Alice W Gold suff"
+                        }
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/Users",
+            "bulkId": "6431",
+            "data": {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": "Emander",
+                "emails": [
+                    {
+                        "verified": false,
+                        "type": "recovery",
+                        "primary": false,
+                        "value": "Emander@example.com"
+                    }
+
+                    ,
+                    {
+                        "verified": false,
+                        "type": "home",
+                        "primary": true,
+                        "value": "Emander@example.com"
+                    }
+
+                ],
+                "name":
+                        {
+                            "honorificPrefix": "dr",
+                            "honorificSuffix": "suff",
+                            "givenName": "Emander",
+                            "middleName": "W",
+                            "familyName": "Gold",
+                            "formatted": "dr Alice W Gold suff"
+                        }
+            }
+        }
+    ]
+}
