@@ -141,6 +141,7 @@ def bulkReq(bulkFile):
 
     if response.status_code == 201:
         print('bulk.json has been successfully imported.')
+        print(response.json())
     else:
         print('An error has occured\n')
         print(response.json())
