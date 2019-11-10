@@ -1,5 +1,9 @@
 import requests
+import shutil
+import os
 import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def __init__():
     global URL
@@ -14,18 +18,22 @@ def __init__():
     auth_token = getAuth(conf['ClientId'], conf['ClientSecret'])
 
     # Test Data
-    userName = 'Alice'
-    createFile = 'file1.json'
-    updateFile = 'update1.json'
-    bulkFile = 'bulk.json'
-    
-    # Comment out the function you want to test
+    bulkFile = 'bulk_patch.json'
 
-    # createUser(createFile)
-    # print(getUserId(userName))
-    # updateUser(userName, updateFile)
-    # deleteUser(userName)
-    bulkReq(bulkFile)
+    reqPath = './Request/'
+    archPath = './Archive/'
+    
+    # process multiple json files
+    for filename in os.listdir(reqPath):
+        if filename.endswith(".json"):
+            bulkFile = reqPath + filename
+            
+            parseFile(bulkFile)
+            # move processed file in archive folder
+            shutil.move(bulkFile, archPath)
+
+    print('All files were successfully loaded.')
+
 
 def getAuth(clientId, clientSecret): 
 
@@ -45,87 +53,57 @@ def getAuth(clientId, clientSecret):
 
     return auth_token
 
-def createUser(createFile):
-
+def getId(userName, path):
     headers = {
-    'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + auth_token,
     }
-
-    contents = open(createFile, "r")
-
-    # Convert file contents into JSON format
-    dataString = json.dumps(contents.read())
-    data = json.loads(dataString)
-
-    response = requests.post(URL + '/admin/v1/Users', headers=headers, data=data, verify=False)
-
-    # Error handling
-    if response.status_code == 201:
-        print(response.json()['userName'] + ' has been created')
+    if path == '/Groups':
+        params = (
+        ('attributes', 'members'),
+        ('filter','displayName eq "' + userName + '"'),
+        )
     else:
-        print('An error has occured\n')
-        print(json.dumps(response.json(), indent=2))
-
-
-def getUserId(userName):
-    headers = {
-    'Authorization': 'Bearer ' + auth_token,
-    }
-    response = requests.get(URL + '/admin/v1/Users', headers=headers, verify=False)
+        params = (
+        ('attributes', userName),
+        ('filter','userName sw "' + userName + '"'),
+        )
+    response = requests.get(URL + '/admin/v1' + path, headers=headers, params=params, verify=False)
 
     res = response.json()
     
-    print(res)
-    print(response.status_code)
     # Error handling
+    # print(res)
+    # print(response.status_code)
     if response.status_code == 200:
-        for userId in res['Resources']:
-            print(userId['userName']) #//Comment out to print()all users
-            if userId['userName'] == userName:
-                print('ID for ' + userName + ' retrieved ' + userId['id'])
-                return userId['id']
+        return res['Resources'][0]['id']
     else:
         print(json.dumps(response.json(), indent=2))
 
-def updateUser(userName, updateFile):
+def parseFile(bulkFile):
 
-    userId = getUserId(userName)
-
-    headers = {
-    'Content-Type': 'application/scim+json',
-    'Authorization': 'Bearer '+ auth_token,
-    }
-
-    contents = open(updateFile, "r")
+    with open(bulkFile, "r+") as contents:
 
     # Convert file contents into JSON format
-    dataString = json.dumps(contents.read())
-    data = json.loads(dataString)
+        data = json.loads(contents.read())
 
-    response = requests.patch(URL + '/admin/v1/Users/' + userId, headers=headers, data=data, verify=False)
+        for bulkData in data['Operations']:
+            if(bulkData['method'] != 'POST'):
+                path = bulkData['path'].rsplit('/', 1)[0]
+                operation = bulkData['data']['Operations']
+                userId = getId(bulkData['path'].rsplit('/', 1)[-1] ,path)
+                bulkData['path'] = path + '/' + userId
+                for op in operation:
+                    if op['op'] == 'add' or op['op'] == 'remove':
+                        groupUserId = op['value'][0]['value']
+                        op['value'][0]['value'] = getId(groupUserId ,'/Users')
+
+        dataString = json.dumps(data)
+        contents.seek(0)
+        contents.write(dataString)
+        contents.truncate()
+        contents.close()
     
-    # Error handling
-    if response.status_code == 200:
-        print(userName + ' has been updated')
-    else:
-        print('An error has occured\n')
-        print(json.dumps(response.json(), indent=2))
-
-def deleteUser(userName):
-    headers = {
-    'Authorization': 'Bearer '+ auth_token,
-    }
-    userId = getUserId(userName)
-
-    response = requests.delete(URL + '/admin/v1/Users/' + userId, headers=headers)
-
-    # Error handling
-    if response.status_code == 204:
-        print(userName + ' has been deleted')
-    else:
-        print('An error has occured\n')
-        print(json.dumps(response.json(), indent=2))
+    bulkReq(bulkFile)
 
 def bulkReq(bulkFile):
     headers = {
@@ -140,7 +118,7 @@ def bulkReq(bulkFile):
     response = requests.post(URL + '/admin/v1/Bulk', headers=headers, data=data, verify=False)
 
     if response.status_code == 201:
-        print('bulk.json has been successfully imported.')
+        print(bulkFile + ' has been successfully imported.')
         print(json.dumps(response.json(), indent=2))
     else:
         print('An error has occured\n')
