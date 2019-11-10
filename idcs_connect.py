@@ -23,6 +23,9 @@ def __init__():
     reqPath = './Request/'
     archPath = './Archive/'
     
+    #Check if Archive dir exists
+    if not os.path.exists(archPath):
+        os.makedirs(archPath)
     # process multiple json files
     for filename in os.listdir(reqPath):
         if filename.endswith(".json"):
