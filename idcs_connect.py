@@ -1,3 +1,4 @@
+import re
 import requests
 import shutil
 import os
@@ -30,10 +31,9 @@ def __init__():
     for filename in os.listdir(reqPath):
         if filename.endswith(".json"):
             bulkFile = reqPath + filename
-            
             parseFile(bulkFile)
             # move processed file in archive folder
-            shutil.move(bulkFile, archPath)
+            # shutil.move(bulkFile, archPath)
 
     print('All files were successfully loaded.')
 
@@ -78,6 +78,7 @@ def getId(userName, path):
     # print(res)
     # print(response.status_code)
     if response.status_code == 200:
+        print(res['Resources'][0]['id'])
         return res['Resources'][0]['id']
     else:
         print(json.dumps(response.json(), indent=2))
@@ -96,7 +97,13 @@ def parseFile(bulkFile):
                 userId = getId(bulkData['path'].rsplit('/', 1)[-1] ,path)
                 bulkData['path'] = path + '/' + userId
                 for op in operation:
-                    if op['op'] == 'add' or op['op'] == 'remove':
+                    if op['op'] == 'remove':
+                        pathGroup = op['path'].rsplit("\"")
+                        pathGroup[1] = "\"" + getId(pathGroup[1] ,'/Users') + "\""
+                        op['path'] = "".join(pathGroup)
+                        print(pathGroup)
+                        print(op['path'])
+                    if op['op'] == 'add':
                         groupUserId = op['value'][0]['value']
                         op['value'][0]['value'] = getId(groupUserId ,'/Users')
 
