@@ -98,8 +98,8 @@ def parseFile(bulkFile):
                 bulkData['path'] = path + '/' + userId
                 for op in operation:
                     if op['op'] == 'remove':
-                        pathGroup = op['path'].rsplit("\"")
-                        pathGroup[1] = "\"" + getId(pathGroup[1] ,'/Users') + "\""
+                        pathGroup = op['path'].rsplit("/")
+                        pathGroup[-1] = "[value eq \"" + getId(pathGroup[-1] ,'/Users') + "\"]"
                         op['path'] = "".join(pathGroup)
                     if op['op'] == 'add':
                         groupUserId = op['value'][0]['value']
