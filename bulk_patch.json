@@ -1,0 +1,75 @@
+{
+    "schemas": ["urn:ietf:params:scim:api:messages:2.0:BulkRequest"],
+    "Operations": [{
+			"method": "PATCH",
+			"path": "/Users/00010073001",
+			"data": {
+				"schemas": [
+					"urn:ietf:params:scim:api:messages:2.0:PatchOp"
+				],
+				"Operations": [
+					{
+						"op": "replace",
+						"path": "emails",
+						"value": [ {
+							"value": "jack.fabellaiii@example.com",
+							"type": "work",
+							"primary": true
+							}
+						]
+					},
+					{
+						"op": "replace",
+						"path": "name",
+						"value": {
+							"familyName": "Fabella III"
+						}
+					}
+				]
+			}
+		},
+		{
+			"method": "PATCH",
+			"path": "/Users/00010073002",
+			"data": {
+				"schemas": [
+					"urn:ietf:params:scim:api:messages:2.0:PatchOp"
+				],
+				"Operations": [
+					{
+						"op": "replace",
+						"path": "name",
+						"value": {
+							"givenName": "Jewel Ann"
+						}
+					}
+				]
+			}
+		},
+		{
+			"method": "PATCH",
+			"path": "/Groups/Procurement Admin",
+			"data": {
+				"schemas": [
+					"urn:ietf:params:scim:api:messages:2.0:PatchOp"
+				],
+				"Operations": [
+					{
+						"op": "remove",
+						"path": "members/00010073001"
+					},
+                    {
+                        "op": "add",
+                        "path": "members",
+                        "value": [
+                            {
+                                "value": "00010073003",
+                                "type": "User"
+                            }
+                        ]
+                    }
+				]
+			}
+		}
+	]
+}

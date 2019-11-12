@@ -1,0 +1,86 @@
+{
+    "schemas": ["urn:ietf:params:scim:api:messages:2.0:BulkRequest"],
+    "Operations": [{
+			"method": "POST",
+			"path": "/Users",
+			"bulkId": "U0000000001",
+			"data": {
+				"schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+				"userName": "00010073001",
+				"emails": [{
+					"value": "jack.fabella@example.com",
+					"type": "work",
+					"primary": true
+				}],
+				"name": {
+					"givenName": "Jack",
+					"middleName": "Tolentino",
+					"familyName": "Fabella"
+				}
+			}
+		},
+		{
+			"method": "POST",
+			"path": "/Users",
+			"bulkId": "U0000000002",
+			"data": {
+				"schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+				"userName": "00010073002",
+				"emails": [{
+					"value": "jewel.fabella@example.com",
+					"type": "work",
+					"primary": true
+				}],
+				"name": {
+					"givenName": "Jewel",
+					"middleName": "Tolentino",
+					"familyName": "Fabella"
+				}
+			}
+		},
+		{
+			"method": "POST",
+			"path": "/Users",
+			"bulkId": "U0000000003",
+			"data": {
+				"schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+				"userName": "00010073003",
+				"emails": [{
+					"value": "jam.fabella@example.com",
+					"type": "work",
+					"primary": true
+				}],
+				"name": {
+					"givenName": "Jam",
+					"middleName": "Tolentino",
+					"familyName": "Fabella"
+				}
+			}
+		},
+		{
+            "method": "POST",
+            "path": "/Groups",
+            "bulkId": "G0000000001",
+            "data": {
+                "displayName": "Procurement Admin",
+				"urn:ietf:params:scim:schemas:oracle:idcs:extension:group:Group": {
+					"description": "Procurement Administrator Group"
+					},
+				"schemas": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Group",
+                    "urn:ietf:params:scim:schemas:oracle:idcs:extension:group:Group"
+					],
+                "members": [
+                    {
+                        "type": "User",
+                        "value": "bulkId:U0000000001"
+                    },
+					{
+                        "type": "User",
+                        "value": "bulkId:U0000000003"
+                    }
+                ]
+            }
+        }
+	]
+}
