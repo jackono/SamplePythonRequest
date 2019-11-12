@@ -101,8 +101,6 @@ def parseFile(bulkFile):
                         pathGroup = op['path'].rsplit("\"")
                         pathGroup[1] = "\"" + getId(pathGroup[1] ,'/Users') + "\""
                         op['path'] = "".join(pathGroup)
-                        print(pathGroup)
-                        print(op['path'])
                     if op['op'] == 'add':
                         groupUserId = op['value'][0]['value']
                         op['value'][0]['value'] = getId(groupUserId ,'/Users')
